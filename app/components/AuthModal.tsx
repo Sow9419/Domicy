@@ -15,12 +15,16 @@ type AuthModalProps = {
   isVisible: boolean;
   onClose: () => void;
   type: "login" | "signup";
+  onSwitchToSignup?: () => void;
+  onSwitchToLogin?: () => void;
 };
 
 export default function AuthModal({
   isVisible,
   onClose,
   type,
+  onSwitchToSignup,
+  onSwitchToLogin,
 }: AuthModalProps) {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
@@ -146,17 +150,30 @@ export default function AuthModal({
           <View className="flex-row justify-between mt-auto">
             {isLogin ? (
               <>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                  if (onSwitchToSignup) {
+                    onClose();
+                    onSwitchToSignup();
+                  }
+                }}>
                   <Text className="text-green-500">S'inscrire</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                  onClose();
+                  router.push("/auth/forgot_password");
+                }}>
                   <Text className="text-green-500">Mot de passe oublié ?</Text>
                 </TouchableOpacity>
               </>
             ) : (
               <View className="w-full flex-row justify-center">
                 <Text className="text-gray-600">Déjà un compte ? </Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                  if (onSwitchToLogin) {
+                    onClose();
+                    onSwitchToLogin();
+                  }
+                }}>
                   <Text className="text-green-500">Se connecter</Text>
                 </TouchableOpacity>
               </View>

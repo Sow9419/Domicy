@@ -21,9 +21,11 @@ export default function OnboardingScreen() {
         }}
         className="w-full h-screen"
       >
-        <View className="flex-1 bg-black/30 px-6 justify-between">
-          {/* Top section with title and subtitle */}
-          <View className="mt-20">
+        <View className="flex-1 bg-black/60 px-6 justify-end pb-8">
+        
+
+          {/* Title and subtitle section */}
+          <View className="mb-8 mt-8">
             <Text className="text-white text-3xl font-bold mb-2">
               Trouvez votre maison idéale
             </Text>
@@ -32,82 +34,87 @@ export default function OnboardingScreen() {
             </Text>
           </View>
 
-          {/* Bottom section with features and buttons */}
-          <View className="mb-10">
-            {/* Features */}
-            <View className="mb-8 space-y-6">
-              <View className="flex-row items-center">
-                <View className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-4">
-                  <Home color="white" size={20} />
-                </View>
-                <View>
-                  <Text className="text-white font-bold text-base">
-                    Milliers de propriétés
-                  </Text>
-                  <Text className="text-white text-sm">
-                    Un large choix de maisons et d'appartements
-                  </Text>
-                </View>
+          {/* Features */}
+          <View className="space-y-6 pb-6">
+            <View className="flex-row items-center">
+              <View className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-4">
+                <Home color="white" size={20} />
               </View>
-
-              <View className="flex-row items-center">
-                <View className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-4">
-                  <Briefcase color="white" size={20} />
-                </View>
-                <View>
-                  <Text className="text-white font-bold text-base">
-                    Réservation instantanée
-                  </Text>
-                  <Text className="text-white text-sm">
-                    Réservez en quelques clics seulement
-                  </Text>
-                </View>
-              </View>
-
-              <View className="flex-row items-center">
-                <View className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-4">
-                  <Shield color="white" size={20} />
-                </View>
-                <View>
-                  <Text className="text-white font-bold text-base">
-                    100% sécurisé
-                  </Text>
-                  <Text className="text-white text-sm">
-                    Paiements et données personnelles protégés
-                  </Text>
-                </View>
+              <View>
+                <Text className="text-white font-bold text-base">
+                  Milliers de propriétés
+                </Text>
+                <Text className="text-white text-sm">
+                  Un large choix de maisons et d'appartements
+                </Text>
               </View>
             </View>
 
+            <View className="flex-row items-center">
+              <View className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-4">
+                <Briefcase color="white" size={20} />
+              </View>
+              <View>
+                <Text className="text-white font-bold text-base">
+                  Réservation instantanée
+                </Text>
+                <Text className="text-white text-sm">
+                  Réservez en quelques clics seulement
+                </Text>
+              </View>
+            </View>
+
+            <View className="flex-row items-center">
+              <View className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-4">
+                <Shield color="white" size={20} />
+              </View>
+              <View>
+                <Text className="text-white font-bold text-base">
+                  100% sécurisé
+                </Text>
+                <Text className="text-white text-sm">
+                  Paiements et données personnelles protégés
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          {/* Auth Modals */}
+          <AuthModal
+            isVisible={showLoginModal}
+            onClose={() => setShowLoginModal(false)}
+            type="login"
+            onSwitchToSignup={() => {
+              setShowLoginModal(false);
+              setShowSignupModal(true);
+            }}
+          />
+          <AuthModal
+            isVisible={showSignupModal}
+            onClose={() => setShowSignupModal(false)}
+            type="signup"
+            onSwitchToLogin={() => {
+              setShowSignupModal(false);
+              setShowLoginModal(true);
+            }}
+          />
             {/* CTA Button */}
             <TouchableOpacity
-              className="bg-green-500 py-4 rounded-md items-center mb-4"
-              onPress={() => setShowSignupModal(true)}
-            >
-              <Text className="text-white font-bold text-lg">Commencer</Text>
-            </TouchableOpacity>
+            className="bg-green-500 py-4 rounded-md items-center mb-4"
+            onPress={() => setShowSignupModal(true)}
+          >
+            <Text className="text-white font-bold text-lg">Commencer</Text>
+          </TouchableOpacity>
 
-            {/* Login link */}
-            <TouchableOpacity onPress={() => setShowLoginModal(true)}>
-              <Text className="text-white text-center">
-                Déjà un compte? <Text className="underline">Se connecter</Text>
-              </Text>
-            </TouchableOpacity>
-
-            {/* Auth Modals */}
-            <AuthModal
-              isVisible={showLoginModal}
-              onClose={() => setShowLoginModal(false)}
-              type="login"
-            />
-            <AuthModal
-              isVisible={showSignupModal}
-              onClose={() => setShowSignupModal(false)}
-              type="signup"
-            />
-          </View>
+          {/* Login link */}
+          <TouchableOpacity onPress={() => setShowLoginModal(true)}>
+            <Text className="text-white text-center">
+              Déjà un compte? <Text className="underline">Se connecter</Text>
+            </Text>
+          </TouchableOpacity>
         </View>
-      </ImageBackground>
-    </ScrollView>
-  );
-}
+        </ImageBackground>
+      </ScrollView>
+    );
+  }
+

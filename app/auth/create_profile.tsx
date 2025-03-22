@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -18,7 +18,6 @@ import {
   Building,
 } from "lucide-react-native";
 import { StatusBar } from "expo-status-bar";
-import PhoneInput from "react-native-phone-input";
 
 type Step = "final_profile" | "info_perso";
 
@@ -27,12 +26,10 @@ export default function CreateProfile() {
   const [step, setStep] = useState<Step>("info_perso");
   const [slogan, setSlogan] = useState("");
   const [fullName, setFullName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [whatsappNumber, setWhatsappNumber] = useState("");
   const [address, setAddress] = useState("");
   const [userRole, setUserRole] = useState<"tenant" | "owner" | null>(null);
-
-  // Phone input refs
-  const phoneInputRef = useRef<PhoneInput | null>(null);
-  const whatsappInputRef = useRef<PhoneInput | null>(null);
 
   const handleBack = () => {
     if (step === "final_profile") {
@@ -46,20 +43,8 @@ export default function CreateProfile() {
     if (step === "info_perso") {
       setStep("final_profile");
     } else {
-      // Get phone numbers from the phone input components
-      const phoneNumber = phoneInputRef.current?.getValue() || "";
-      const whatsappNumber = whatsappInputRef.current?.getValue() || "";
-      const phoneCountryCode = phoneInputRef.current?.getCountryCode() || "";
-      const whatsappCountryCode =
-        whatsappInputRef.current?.getCountryCode() || "";
-
       // Submit form and navigate to next screen
-      console.log("Form submitted", {
-        phoneNumber,
-        whatsappNumber,
-        phoneCountryCode,
-        whatsappCountryCode,
-      });
+      console.log("Form submitted");
       // router.push('/dashboard');
     }
   };
@@ -104,29 +89,16 @@ export default function CreateProfile() {
         {/* WhatsApp Number */}
         <View className="mb-6">
           <Text className="text-lg font-medium mb-2">Numéro WhatsApp</Text>
-          <View className="border border-gray-300 rounded-lg overflow-hidden">
-            <PhoneInput
-              ref={whatsappInputRef}
-              initialCountry="fr"
-              textProps={{
-                placeholder: "Numéro WhatsApp",
-              }}
-              textStyle={{
-                fontSize: 16,
-                paddingVertical: 12,
-                paddingHorizontal: 12,
-                color: "#333",
-              }}
-              style={{
-                height: 50,
-                width: "100%",
-                backgroundColor: "white",
-              }}
-              flagStyle={{
-                width: 30,
-                height: 20,
-              }}
-              offset={10}
+          <View className="flex-row">
+            <View className="border border-gray-300 rounded-l-lg px-3 py-3 justify-center">
+              <Text>+33</Text>
+            </View>
+            <TextInput
+              className="flex-1 border border-gray-300 rounded-r-lg px-3 py-2"
+              placeholder="Numéro WhatsApp"
+              value={whatsappNumber}
+              onChangeText={setWhatsappNumber}
+              keyboardType="phone-pad"
             />
           </View>
           <Text className="text-gray-500 text-sm mt-1">
@@ -182,29 +154,16 @@ export default function CreateProfile() {
         {/* Phone Number */}
         <View className="mb-6">
           <Text className="text-lg font-medium mb-2">Numéro de téléphone</Text>
-          <View className="border border-gray-300 rounded-lg overflow-hidden">
-            <PhoneInput
-              ref={phoneInputRef}
-              initialCountry="fr"
-              textProps={{
-                placeholder: "Numéro de téléphone",
-              }}
-              textStyle={{
-                fontSize: 16,
-                paddingVertical: 12,
-                paddingHorizontal: 12,
-                color: "#333",
-              }}
-              style={{
-                height: 50,
-                width: "100%",
-                backgroundColor: "white",
-              }}
-              flagStyle={{
-                width: 30,
-                height: 20,
-              }}
-              offset={10}
+          <View className="flex-row">
+            <View className="border border-gray-300 rounded-l-lg px-3 py-3 justify-center">
+              <Text>+33</Text>
+            </View>
+            <TextInput
+              className="flex-1 border border-gray-300 rounded-r-lg px-3 py-2"
+              placeholder="6 12 34 56 78"
+              value={phoneNumber}
+              onChangeText={setPhoneNumber}
+              keyboardType="phone-pad"
             />
           </View>
         </View>
